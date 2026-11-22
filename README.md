@@ -1,5 +1,7 @@
 # Marketplace
 
+**Live demo:** https://marketplace-test3-two.vercel.app
+
 A Facebook Marketplace–inspired web app where anyone can list an item for sale with a photo, browse and search listings by category, open a listing's own page, and message the seller. No account is needed. Listings, photos, and messages are stored in Supabase.
 
 ## Features
@@ -107,6 +109,8 @@ npm run build
 4. Check that a listing with a photo can be created, appears on the homepage, opens at `/item/<id>`, and that a sent message shows up in the Supabase `messages` table.
 
 ## Notes
+
+- Vercel functions run in `sin1` (Singapore), the same region as the Supabase project, to keep database round trips short (see `vercel.json`).
 
 - Prices are shown in USD.
 - Messages are stored in Supabase. No email is sent.
