@@ -1,6 +1,6 @@
 # Marketplace
 
-**Live demo:** https://test3-marketplace-edna.vercel.app
+**Live demo:** https://test3-marketplace-edna.vercel.app · **Demo video:** [demo/marketplace-demo.mp4](demo/marketplace-demo.mp4) (1 min 24 s)
 
 A Facebook Marketplace–inspired web app where anyone can list an item for sale with a photo, browse and search listings by category, open a listing's own page, and message the seller. No account is needed. Listings, photos, and messages are stored in Supabase.
 
