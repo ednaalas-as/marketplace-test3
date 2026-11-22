@@ -108,6 +108,10 @@ npm run build
 3. Deploy. If you add the variables after the first deploy, redeploy so the `NEXT_PUBLIC_` values get built in.
 4. Check that a listing with a photo can be created, appears on the homepage, opens at `/item/<id>`, and that a sent message shows up in the Supabase `messages` table.
 
+## Demo data
+
+`seed/listings.tsv` and `seed/images/` hold the 8 demo listings on the live site, one per category. The images are AI-generated (Figma AI) and the seller emails are placeholder `@example.com` addresses. To reseed a fresh project, create each row through the app's `/create` form or `POST /api/listings`.
+
 ## Notes
 
 - Vercel functions run in `sin1` (Singapore), the same region as the Supabase project, to keep database round trips short (see `vercel.json`).
