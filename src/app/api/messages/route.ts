@@ -1,4 +1,5 @@
 import { jsonError, serverError, tooManyRequests } from "@/lib/api";
+import { notifySeller } from "@/lib/email";
 import { getListing } from "@/lib/listings";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { createPublicClient } from "@/lib/supabase";
@@ -44,7 +45,15 @@ export async function POST(request: Request) {
     });
     if (error) throw error;
 
-    return Response.json({ ok: true }, { status: 201 });
+    // The message is saved; emailing the seller is best effort.
+    const email = await notifySeller({
+      listing,
+      buyerEmail: result.data.buyerEmail,
+      message: result.data.message,
+      siteUrl: new URL(request.url).origin,
+    });
+
+    return Response.json({ ok: true, emailed: email.sent }, { status: 201 });
   } catch (err) {
     return serverError("POST /api/messages", err);
   }

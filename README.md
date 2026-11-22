@@ -9,7 +9,7 @@ A Facebook Marketplace–inspired web app where anyone can list an item for sale
 - **Create a listing** (`/create`): photo upload with preview, title, description, price, seller email, and category. Validation runs in the browser and again on the server. Large phone photos are resized in the browser before upload.
 - **Browse and filter** (`/`): a responsive grid of real listings from Supabase, category chips, and keyword search over titles and descriptions. Includes loading skeletons and empty, no-results, and error states.
 - **Listing detail** (`/item/[id]`): a large photo, price, category, date posted, description, and seller email. Bad IDs and missing listings show a not-found page.
-- **Message seller**: a modal that saves the buyer's email and message to Supabase, linked to the listing and its seller.
+- **Message seller**: a modal that saves the buyer's email and message to Supabase, linked to the listing and its seller. If email is configured, the seller also gets an email with the message, and replying to it goes straight to the buyer.
 
 ## Tech stack
 
@@ -83,6 +83,13 @@ Fill in the values from **Project Settings → API Keys** in the Supabase dashbo
 
 If any variable is missing, the app shows a clear "not configured" message instead of failing silently.
 
+**Optional: seller email notifications ([Resend](https://resend.com))**
+
+| Variable | Where it's used |
+| --- | --- |
+| `RESEND_API_KEY` | Resend API key. **Server only.** Without it, messages are saved but no email is sent. |
+| `EMAIL_FROM` | Sender, e.g. `Marketplace <hello@yourdomain.com>`. Defaults to `Marketplace <onboarding@resend.dev>`, which only delivers to your own Resend account address. Verify a domain in Resend to email any seller. |
+
 ### 4. Run locally
 
 ```bash
@@ -117,5 +124,5 @@ npm run build
 - Vercel functions run in `sin1` (Singapore), the same region as the Supabase project, to keep database round trips short (see `vercel.json`).
 
 - Prices are shown in USD.
-- Messages are stored in Supabase. No email is sent.
+- Messages are always stored in Supabase. Emailing the seller is best effort: if Resend is not configured or fails, the message is still saved and the buyer is told it was saved rather than emailed.
 - Uploads are capped at 4 MB to stay under Vercel's 4.5 MB request-body limit. Larger photos (up to 20 MB) are resized in the browser first.

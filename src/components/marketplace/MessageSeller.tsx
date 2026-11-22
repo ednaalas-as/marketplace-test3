@@ -58,6 +58,7 @@ function MessageForm({
   const [errors, setErrors] = useState<FieldErrors>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("idle");
+  const [emailed, setEmailed] = useState(false);
   const inFlight = useRef(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -90,6 +91,8 @@ function MessageForm({
         setStatus("idle");
         return;
       }
+      const json = (await res.json().catch(() => null)) as { emailed?: boolean } | null;
+      setEmailed(Boolean(json?.emailed));
       setStatus("sent");
     } catch {
       setFormError("Network error. Check your connection and try again.");
@@ -122,7 +125,10 @@ function MessageForm({
           </span>
           <p className="text-lg font-bold">Message sent!</p>
           <p className="mt-1 text-[15px] text-muted">
-            The seller will reply to <strong className="text-ink">{buyerEmail}</strong>.
+            {emailed
+              ? "We emailed the seller. Their reply will go to "
+              : "Your message was saved for the seller. They can reply to "}
+            <strong className="text-ink">{buyerEmail}</strong>.
           </p>
           <button type="button" className="btn-secondary mt-6 w-full" onClick={onClose}>
             Done
