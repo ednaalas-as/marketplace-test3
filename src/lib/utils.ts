@@ -2,15 +2,21 @@ export function cn(...classes: Array<string | false | null | undefined>): string
   return classes.filter(Boolean).join(" ");
 }
 
-const priceFormatter = new Intl.NumberFormat("en-US", {
+const wholeFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
+  maximumFractionDigits: 0,
+});
+const centsFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
   maximumFractionDigits: 2,
-  minimumFractionDigits: 0,
 });
 
+/** $180 for whole amounts, $1,250.50 when there are cents. */
 export function formatPrice(price: number): string {
-  return priceFormatter.format(price);
+  return Number.isInteger(price) ? wholeFormatter.format(price) : centsFormatter.format(price);
 }
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {

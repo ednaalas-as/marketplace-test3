@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 @theme {
+  --breakpoint-xs: 22.5rem;
+
   --color-brand: #1877f2;
   --color-brand-hover: #166fe5;
   --color-brand-soft: #e7f3ff;

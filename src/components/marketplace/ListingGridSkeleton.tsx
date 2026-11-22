@@ -1,5 +1,5 @@
 export const GRID_CLASSES =
-  "grid grid-cols-1 gap-x-3 gap-y-6 min-[360px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5";
+  "grid grid-cols-1 gap-x-3 gap-y-6 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5";
 
 export function ListingGridSkeleton({ count = 10 }: { count?: number }) {
   return (
